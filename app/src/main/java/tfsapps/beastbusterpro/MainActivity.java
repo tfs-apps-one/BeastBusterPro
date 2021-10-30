@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         //DBのロード
+        /* データベース */
+        helper = new MyOpenHelper(this);
         AppDBInitRoad();
     }
     @Override
