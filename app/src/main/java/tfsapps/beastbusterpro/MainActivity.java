@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private int db_light2 = 0;      //DBライト（緊急音）
     private int db_shake = 0;       //DB振る
 
-    private Spinner sp_sound1;
-    private Spinner sp_sound2;
-    private Spinner sp_light1;
-    private Spinner sp_light2;
-    private Spinner sp_interval;
+    private Spinner sp_sound1;      //通常音選択
+    private Spinner sp_sound2;      //SOS音選択
+    private Spinner sp_light1;      //通常ライト選択
+    private Spinner sp_light2;      //SOSライト選択
+    private Spinner sp_interval;    //再生間隔
 
-    private SeekBar seek_volume1;    //SeekBar
-    private SeekBar seek_volume2;    //SeekBar
+    private SeekBar seek_volume1;    //通常音量
+    private SeekBar seek_volume2;    //SOS音量
 
 
     @Override
