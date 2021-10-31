@@ -11,14 +11,17 @@
     通常音　の設定
     ******************************************************************
 -->
-
     <LinearLayout
         android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
         android:layout_height="110dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
         android:backgroundTint="@null"
+        android:background="@drawable/btn_grad1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,6 +34,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:background="@null"
             android:layout_weight="1"
             android:src="@drawable/bell1" />
 
@@ -42,22 +46,27 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/tog_btn_bak"
             android:layout_weight="1"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:checked="false"
             android:textOff="OFF"
-            android:textOn="ON" />
+            android:textOn="O N" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout11"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_grad1"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
 
@@ -66,6 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:backgroundTint="@null"
             android:entries="@array/list_sound1"
             android:spinnerMode="dialog"/>
 
@@ -82,11 +92,11 @@
     <LinearLayout
         android:id="@+id/linearLayout13"
         android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_grad1"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
         android:orientation="horizontal">
@@ -100,6 +110,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         android:layout_weight="1"
+        android:background="@null"
         android:src="@drawable/volume" />
 
     <TextView
@@ -111,7 +122,8 @@
         android:layout_marginStart="1dp"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
-        android:gravity="center"
+        android:gravity="center|right"
+        android:textColor="@color/teal_700"
         android:text="1"
         android:textStyle="bold"
         android:textSize="20dp"/>
@@ -131,19 +143,23 @@
 
     </LinearLayout>
 
-<!--
-    ******************************************************************
-    緊急音　の設定
-    ******************************************************************
--->
+    <!--
+        ******************************************************************
+        緊急音　の設定
+        ******************************************************************
+    -->
 
     <LinearLayout
         android:id="@+id/linearLayout21"
         android:layout_width="match_parent"
         android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
         android:backgroundTint="@null"
+        android:background="@drawable/btn_grad2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout13"
         >
 
@@ -156,6 +172,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
+            android:background="@null"
             android:src="@drawable/sos1" />
 
         <ToggleButton
@@ -166,22 +183,27 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/tog_btn_bak"
             android:layout_weight="1"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:checked="false"
             android:textOff="OFF"
-            android:textOn="ON" />
+            android:textOn="O N" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout22"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout21"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_grad2"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout21">
 
@@ -206,11 +228,11 @@
     <LinearLayout
         android:id="@+id/linearLayout23"
         android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_grad2"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout22"
         android:orientation="horizontal">
@@ -224,6 +246,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         android:layout_weight="1"
+        android:background="@null"
         android:src="@drawable/volume" />
 
     <TextView
@@ -235,7 +258,8 @@
         android:layout_marginStart="1dp"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
-        android:gravity="center"
+        android:gravity="center|right"
+        android:textColor="@color/design_default_color_secondary_variant"
         android:text="1"
         android:textStyle="bold"
         android:textSize="20dp"/>
@@ -257,12 +281,13 @@
     <LinearLayout
         android:id="@+id/linearLayout31"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_round"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout23">
 
@@ -279,6 +304,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
+            android:textColor="@color/design_default_color_error"
+            android:textStyle="bold"
             android:text="@string/sw_shake" />
 
     </LinearLayout>
