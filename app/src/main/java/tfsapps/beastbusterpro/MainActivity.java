@@ -10,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seek_volume1;    //通常音量
     private SeekBar seek_volume2;    //SOS音量
 
+    private ToggleButton toggle_normal;      //通常音状態（ON/OFF）
+    private ToggleButton toggle_emergency;   //異常音状態（ON/OFF）
+    private Switch sw_shake;                 //振る振る
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         seekSelect();
         spinnerSelect();
+        toggleSelect();
     }
     /* **************************************************
         各種OS上の動作定義
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         /* データベース */
         helper = new MyOpenHelper(this);
         AppDBInitRoad();
+        screen_display();
     }
     @Override
     public void onResume() {
@@ -78,10 +85,100 @@ public class MainActivity extends AppCompatActivity {
         AppDBUpdated();
     }
 
+    /* **************************************************
+        表示処理
+    ****************************************************/
+    public void screen_display(){
+        /* SEEK */
+        if (seek_volume1 == null) {
+            seek_volume1 = (SeekBar) findViewById(R.id.seek_volume1);
+        }
+        seek_volume1.setProgress(db_volume1);
+
+        if (seek_volume2 == null) {
+            seek_volume2 = (SeekBar) findViewById(R.id.seek_volume2);
+        }
+        seek_volume2.setProgress(db_volume2);
+
+        /* SPINNER */
+        if (sp_sound1 == null) {
+            sp_sound1 = (Spinner) findViewById(R.id.sp_sound1);
+        }
+        sp_sound1.setSelection(db_normal);
+
+        if (sp_sound2 == null) {
+            sp_sound2 = (Spinner) findViewById(R.id.sp_sound2);
+        }
+        sp_sound2.setSelection(db_emergency);
+
+        if (sp_light1 == null) {
+            sp_light1 = (Spinner) findViewById(R.id.sp_light1);
+        }
+        sp_light1.setSelection(db_light1);
+
+        if (sp_light2 == null) {
+            sp_light2 = (Spinner) findViewById(R.id.sp_light2);
+        }
+        sp_light2.setSelection(db_light2);
+
+        if (sp_interval == null) {
+            sp_interval = (Spinner) findViewById(R.id.sp_interval);
+        }
+        sp_interval.setSelection(db_interval);
+
+        /* TOGGLE */
+        if (sw_shake == null) {
+            sw_shake = (Switch) findViewById(R.id.sw_shake);
+        }
+        if (db_shake == 1)  sw_shake.setChecked(true);
+        else                sw_shake.setChecked(false);
+    }
+
 
     /* **************************************************
         アプリボタン処理
     ****************************************************/
+    public void toggleSelect(){
+        toggle_normal = (ToggleButton) findViewById(R.id.toggle_normal);
+        toggle_normal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //  再生
+                    //  異常停止
+                } else {
+                    //  停止
+                }
+            }
+        });
+
+        toggle_emergency = (ToggleButton) findViewById(R.id.toggle_emergency);
+        toggle_emergency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //  再生
+                    //  通常停止
+                } else {
+                    //  停止
+                }
+            }
+        });
+
+        sw_shake = (Switch) findViewById(R.id.sw_shake);
+        sw_shake.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db_shake = 1;
+                } else {
+                    db_shake = 0;
+                    //  モーション停止
+                }
+            }
+        });
+
+        screen_display();
+    }
+
+
     public void seekSelect(){
         //  通常音の音量
         seek_volume1 = (SeekBar)findViewById(R.id.seek_volume1);
@@ -92,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         db_volume1 = seekBar.getProgress();
 //                      am.setStreamVolume(AudioManager.STREAM_MUSIC, now_volume, 0);
-//                      DisplayScreen();
+                        screen_display();
                     }
                     //ツマミに触れた時
                     @Override
@@ -114,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         db_volume2 = seekBar.getProgress();
 //                      am.setStreamVolume(AudioManager.STREAM_MUSIC, now_volume, 0);
-//                      DisplayScreen();
+                        screen_display();
                     }
                     //ツマミに触れた時
                     @Override
@@ -192,49 +289,10 @@ public class MainActivity extends AppCompatActivity {
                 db_interval = position;
             }
         });
+
+        screen_display();
     }
-
-    /* トグルボタン */
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        //  通常音
-        if (buttonView.getId() == R.id.toggle_normal) {
-            // ON
-            if (isChecked == true){
-                //  通常再生
-                //  SOS停止
-            }
-            // OFF
-            else{
-                //  通常停止
-            }
-        }
-        //  SOS音
-        else if (buttonView.getId() == R.id.toggle_emergency) {
-            // ON
-            if (isChecked == true){
-                //  SOS再生
-                //  通常停止
-            }
-            // OFF
-            else{
-                //  SOS停止
-            }
-        }
-        //  振る振る
-        else if (buttonView.getId() == R.id.sw_shake) {
-            // ON
-            if (isChecked == true){
-                //  フラグON
-            }
-            // OFF
-            else{
-                //  フラグOFF
-                //  モーション停止
-            }
-        }
-    }
-
-
+    
     /* **************************************************
         DB初期ロードおよび設定
     ****************************************************/
