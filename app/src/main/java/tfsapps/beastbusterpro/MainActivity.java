@@ -1,10 +1,13 @@
 package tfsapps.beastbusterpro;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -121,15 +124,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onStart() {
         super.onStart();
+
         //DBのロード
         /* データベース */
         helper = new MyOpenHelper(this);
         AppDBInitRoad();
         screen_display();
+
+        //センサ初期化
+        if (sensorManager == null) {
+            sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        }
+        //センサ監視起動
+        this.emerTimer = new Timer();
+        //タスククラスインスタンス生成
+        this.emerTimerTask = new EmerTimerTask();
+        //タイマースケジュール設定＆開始
+        this.emerTimer.schedule(emerTimerTask, 500, 1000);
     }
     @Override
     public void onResume() {
         super.onResume();
+        //センサ関連
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -149,6 +167,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onDestroy();
         //  DB更新
         AppDBUpdated();
+    }
+
+    //  戻るボタン
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            // 戻るボタンの処理
+            // ダイアログ表示など特定の処理を行いたい場合はここに記述
+            // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
+            if (this.mainTimer1 == null && this.mainTimer2 == null && this.mainTimer3 == null) {
+                /* そのまま終了へ */
+            }
+            else {
+                AlertDialog.Builder ad = new AlertDialog.Builder(this);
+                if (_language.equals("ja")) {
+                    ad.setTitle("[戻る]は操作無効です");
+                    ad.setMessage("\n\n再生を停止した後\n操作が有効になります\n\n\n\n\n");
+                } else {
+                    ad.setTitle("Invalid operation");
+                    ad.setMessage("\n\nAfter stopping playback.\nThe operation will be effective.\n\n\n\n\n");
+                }
+                ad.setPositiveButton("ＯＫ", null);
+                ad.show();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     /* **************************************************
@@ -472,7 +517,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        switch(event.sensor.getType()){
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                geomagnetic = event.values.clone(); break;
+            case Sensor.TYPE_ACCELEROMETER:
+                gravity = event.values.clone(); break;
+        }
+        if(geomagnetic != null && gravity != null) {
+            SensorManager.getRotationMatrix(rotationMatrix, null, gravity, geomagnetic);
+            SensorManager.getOrientation(rotationMatrix, attitude);
 
+            int roll;
+            int pitch;
+            pitch = (int) (attitude[1] * RAD2DEG);
+            roll = (int) (attitude[2] * RAD2DEG);
+//            Log.v("回転", "roll[0]=" +(int) (attitude[0] * RAD2DEG) + " roll[1] ="+(int) (attitude[1] * RAD2DEG) + " roll[2] = "+roll + " pit=" + pitch_zero + " rp=" +roll_plus + " rm="+roll_minus);
+            if (emergency_playing == false) {
+                if (roll> 55 && roll <80) {
+                    roll_plus += 1;
+                }
+                if (roll< -55 && roll >-80) {
+                    roll_minus += 1;
+                }
+            }
+        }
     }
 
     @Override
@@ -534,6 +602,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             });
         }
     }
-
 
 }
