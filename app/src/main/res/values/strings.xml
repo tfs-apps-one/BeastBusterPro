@@ -3,28 +3,28 @@
 
     <string-array name="list_sound1">
     <item>通常音:---</item>
-    <item>通常音：鈴音1</item>
-    <item>通常音：鈴音2</item>
-    <item>通常音：鈴音3</item>
-    <item>通常音：雷鳴1</item>
-    <item>通常音：雷鳴2</item>
-    <item>通常音：雷鳴3</item>
+    <item>通常音:鈴音1</item>
+    <item>通常音:鈴音2</item>
+    <item>通常音:鈴音3</item>
+    <item>通常音:雷鳴1</item>
+    <item>通常音:雷鳴2</item>
+    <item>通常音:雷鳴3</item>
     </string-array>
 
     <string-array name="list_sound2">
     <item>SOS音:---</item>
-    <item>SOS音：鈴音1</item>
-    <item>SOS音：鈴音2</item>
-    <item>SOS音：鈴音3</item>
-    <item>SOS音：雷鳴1</item>
-    <item>SOS音：雷鳴2</item>
-    <item>SOS音：雷鳴3</item>
+    <item>SOS音:鈴音1</item>
+    <item>SOS音:鈴音2</item>
+    <item>SOS音:鈴音3</item>
+    <item>SOS音:雷鳴1</item>
+    <item>SOS音:雷鳴2</item>
+    <item>SOS音:雷鳴3</item>
     </string-array>
 
     <string-array name="list_light">
-    <item>ライト:消灯</item>
-    <item>ライト:点灯</item>
-    <item>ライト:点滅</item>
+    <item>ライト:OFF</item>
+    <item>ライト:ON</item>
+    <item>ライト:ON(点滅)</item>
     </string-array>
 
     <string-array name="list_interval">

@@ -11,11 +11,35 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+//タイマースレッド
+import java.io.IOException;
+import java.security.Policy;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.os.Handler;
+//アラーム関連
+import android.media.MediaPlayer;
+import android.media.AudioManager;
+// ライト
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+//  加速度センサ
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 
-public class MainActivity extends AppCompatActivity {
+//国関連
+import java.util.Locale;
 
+//public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    //  DB関連
     private MyOpenHelper helper;    //DBアクセス
     private int db_isopen = 0;      //DB使用したか
     private int db_normal = 0;      //DB通常音タイプ
@@ -40,10 +64,52 @@ public class MainActivity extends AppCompatActivity {
     private ToggleButton toggle_emergency;   //異常音状態（ON/OFF）
     private Switch sw_shake;                 //振る振る
 
+    //  国設定
+    private Locale _local;
+    private String _language;
+    private String _country;
+
+    //  効果音
+    private MediaPlayer bgm;
+    private MediaPlayer countText;			//テキストビュー
+    //  スレッド
+    private Timer mainTimer1;					//タイマー用
+    private MainTimerTask mainTimerTask1;		//タイマタスククラス
+    private Timer mainTimer2;					//タイマー用
+    private MainTimerTask mainTimerTask2;		//タイマタスククラス
+    private Timer mainTimer3;					//タイマー用
+    private MainTimerTask mainTimerTask3;		//タイマタスククラス
+    private Handler mHandler = new Handler();   //UI Threadへのpost用ハンドラ
+    private Timer emerTimer;					//タイマー用
+    private EmerTimerTask emerTimerTask;		//タイマタスククラス
+    private Handler eHandler = new Handler();   //UI Threadへのpost用ハンドラ
+
+    //  ライト関連
+    private CameraManager mCameraManager;
+    private String mCameraId = null;
+    private boolean isOn = false;
+    protected final static double RAD2DEG = 180/Math.PI;
+    SensorManager sensorManager;
+    float[] rotationMatrix = new float[9];
+    float[] gravity = new float[3];
+    float[] geomagnetic = new float[3];
+    float[] attitude = new float[3];
+    private boolean emergency_playing = false;
+    private int roll_plus = 0;
+    private int roll_minus = 0;
+    private int pitch_zero = 0;
+    private int sec_five = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //  国設定
+        _local = Locale.getDefault();
+        _language = _local.getLanguage();
+        _country = _local.getCountry();
 
         seekSelect();
         spinnerSelect();
@@ -132,6 +198,13 @@ public class MainActivity extends AppCompatActivity {
         }
         if (db_shake == 1)  sw_shake.setChecked(true);
         else                sw_shake.setChecked(false);
+
+        /* TEXT */
+        TextView text_volume1 = (TextView)findViewById(R.id.text_volume1);
+        text_volume1.setText(""+db_volume1);
+
+        TextView text_volume2 = (TextView)findViewById(R.id.text_volume2);
+        text_volume2.setText(""+db_volume2);
     }
 
 
@@ -292,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
 
         screen_display();
     }
-    
+
     /* **************************************************
         DB初期ロードおよび設定
     ****************************************************/
@@ -396,4 +469,71 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Saving.... OK "+ "op=0:"+db_isopen+" nm=1:"+db_normal+" em=2:"+db_emergency+" it=3:"+db_interval+" v1=4:"+db_volume1+" v2=5:"+db_volume2+" l1=6:"+db_light1+" l2=7:"+db_light2+" sk=8:"+db_shake, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    /* **************************************************
+        スレッド
+    ****************************************************/
+
+    /**
+     * タイマータスク派生クラス
+     * run()に定周期で処理したい内容を記述
+     *
+     */
+    public class MainTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            //ここに定周期で実行したい処理を記述します
+            mHandler.post( new Runnable() {
+                public void run() {
+                    //BGMタイマー起動
+                    countText.start();
+                }
+            });
+        }
+    }
+
+    /**
+     * タイマータスク派生クラス
+     * run()に定周期で処理したい内容を記述
+     *
+     */
+    public class EmerTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            //ここに定周期で実行したい処理を記述します
+            eHandler.post(new Runnable() {
+                public void run() {
+                    sec_five += 1;
+                    if (sec_five <= 3) {    // ３秒以内にイベントを捉えた場合に限り
+                        if (roll_plus >= 4 && roll_minus >= 4) {
+                            pitch_zero = 0;
+                            roll_minus = 0;
+                            roll_plus = 0;
+                            /* 異常音を再生 */
+//                            emergency_Start();
+                        }
+                    }
+                    else
+                    {
+                        pitch_zero = 0;
+                        roll_minus = 0;
+                        roll_plus = 0;
+                        sec_five = 0;
+                    }
+                }
+            });
+        }
+    }
+
+
 }
