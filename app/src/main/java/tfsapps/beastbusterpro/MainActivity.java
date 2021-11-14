@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -74,7 +75,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //  効果音
     private MediaPlayer bgm;
-    private MediaPlayer countText;			//テキストビュー
+    private MediaPlayer countText;			    //テキストビュー
+    private int start_volume;
+    private int set_interval;
     //  スレッド
     private Timer mainTimer1;					//タイマー用
     private MainTimerTask mainTimerTask1;		//タイマタスククラス
@@ -103,6 +106,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int pitch_zero = 0;
     private int sec_five = 0;
 
+    final private int INTERVAL_0 = 0;
+    final private int INTERVAL_1 = 1000;
+    final private int INTERVAL_3 = 3000;
+    final private int INTERVAL_5 = 5000;
+    final private int INTERVAL_7 = 7000;
+    final private int INTERVAL_10 = 10000;
+    final private int INTERVAL_15 = 15000;
+    final private int INTERVAL_20 = 20000;
+    final private int INTERVAL_30 = 30000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         _language = _local.getLanguage();
         _country = _local.getCountry();
 
+        //  音量
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        start_volume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        //
         seekSelect();
         spinnerSelect();
         toggleSelect();
@@ -167,6 +184,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onDestroy();
         //  DB更新
         AppDBUpdated();
+
+        /* 音量の戻しの処理 */
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, start_volume, 0);
+        am = null;
     }
 
     //  戻るボタン
@@ -261,10 +283,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         toggle_normal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //  再生
-                    //  異常停止
+                    soundStop(1);
+                    soundStart(1);
                 } else {
-                    //  停止
+                    soundStop(1);
                 }
             }
         });
@@ -273,10 +295,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         toggle_emergency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //  再生
-                    //  通常停止
+                    soundStop(2);
+                    soundStart(2);
                 } else {
-                    //  停止
+                    soundStop(2);
                 }
             }
         });
@@ -601,6 +623,154 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             });
         }
+    }
+
+    /* **************************************************
+        サウンド再生
+    ****************************************************/
+
+    /* 効果音スタート */
+    public void soundStart(int type){
+
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        set_interval = soundInterval(db_interval);
+
+        switch(type) {
+            case 1: //通常音
+                //タイマーインスタンス生成
+                this.mainTimer1 = new Timer();
+                //タスククラスインスタンス生成
+                this.mainTimerTask1 = new MainTimerTask();
+                //タイマースケジュール設定＆開始
+                this.mainTimer1.schedule(mainTimerTask1, 500, set_interval);
+                //ＢＧＭ
+                soundSelect(db_normal);
+
+                if (this.mainTimer2 != null) {
+                    this.mainTimer2.cancel();
+                    this.mainTimer2 = null;
+                }
+                if (this.mainTimer3 != null) {
+                    this.mainTimer3.cancel();
+                    this.mainTimer3 = null;
+                }
+
+                //音量調整
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
+                break;
+
+            case 2: //異常音
+                //タイマーインスタンス生成
+                this.mainTimer2 = new Timer();
+                //タスククラスインスタンス生成
+                this.mainTimerTask2 = new MainTimerTask();
+                //タイマースケジュール設定＆開始
+                this.mainTimer2.schedule(mainTimerTask2, 500, set_interval);
+                //ＢＧＭ
+                soundSelect(db_emergency);
+
+                if (this.mainTimer1 != null) {
+                    this.mainTimer1.cancel();
+                    this.mainTimer1 = null;
+                }
+                if (this.mainTimer3 != null) {
+                    this.mainTimer3.cancel();
+                    this.mainTimer3 = null;
+                }
+                //音量調整
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                break;
+
+            case 3: //緊急音
+                //タイマーインスタンス生成
+                this.mainTimer3 = new Timer();
+                //タスククラスインスタンス生成
+                this.mainTimerTask3 = new MainTimerTask();
+                //タイマースケジュール設定＆開始
+                this.mainTimer3.schedule(mainTimerTask3, 500, set_interval);
+                //ＢＧＭ
+                soundSelect(db_emergency);
+
+                if (this.mainTimer1 != null) {
+                    this.mainTimer1.cancel();
+                    this.mainTimer1 = null;
+                }
+                if (this.mainTimer2 != null) {
+                    this.mainTimer2.cancel();
+                    this.mainTimer2 = null;
+                }
+                //音量調整
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                break;
+        }
+    }
+
+    /* 効果音ストップ */
+    public void soundStop(int type){
+        if (this.mainTimer1 != null) {
+            this.mainTimer1.cancel();
+            this.mainTimer1 = null;
+        }
+        if (this.mainTimer2 != null) {
+            this.mainTimer2.cancel();
+            this.mainTimer2 = null;
+        }
+        if (this.mainTimer3 != null) {
+            this.mainTimer3.cancel();
+            this.mainTimer3 = null;
+        }
+//        this.light_OFF();
+    }
+
+    public void soundSelect(int type){
+
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.bell_1);
+                break;
+            case 2:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.bell_2);
+                break;
+            case 3:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.bell_3);
+                break;
+            case 4:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.thunder_1);
+                break;
+            case 5:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.thunder_2);
+                break;
+            case 6:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.thunder_3);
+                break;
+        }
+    }
+
+    public int soundInterval(int type) {
+
+        switch (type) {
+            case 0:
+                return INTERVAL_0;
+            case 1:
+                return INTERVAL_1;
+            case 2:
+                return INTERVAL_3;
+            case 3:
+                return INTERVAL_5;
+            case 4:
+                return INTERVAL_7;
+            case 5:
+                return INTERVAL_10;
+            case 6:
+                return INTERVAL_15;
+            case 7:
+                return INTERVAL_20;
+            case 8:
+                return INTERVAL_30;
+        }
+        return INTERVAL_0;
     }
 
 }
