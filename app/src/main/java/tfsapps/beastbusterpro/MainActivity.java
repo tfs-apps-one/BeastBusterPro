@@ -130,7 +130,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         start_volume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-        //
+        //カメラ初期化
+        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        mCameraManager.registerTorchCallback(new CameraManager.TorchCallback() {
+            @Override
+            public void onTorchModeChanged(String cameraId, boolean enabled) {
+                super.onTorchModeChanged(cameraId, enabled);
+                mCameraId = cameraId;
+                isOn = enabled;
+            }
+        }, new Handler());
+
+        //  ボタン処理
         seekSelect();
         spinnerSelect();
         toggleSelect();
@@ -184,6 +195,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onDestroy();
         //  DB更新
         AppDBUpdated();
+
+        //カメラ
+        if (mCameraManager != null) {
+            mCameraManager = null;
+        }
 
         /* 音量の戻しの処理 */
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -637,6 +653,44 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     /* **************************************************
+        ライト処理
+    ****************************************************/
+    /*
+     *   ライトＯＮ
+     * */
+    public void light_ON() {
+        if(mCameraId == null){
+            return;
+        }
+        try {
+            mCameraManager.setTorchMode(mCameraId, true);
+        } catch (CameraAccessException e) {
+            //エラー処理
+            e.printStackTrace();
+        }
+    }
+    /*
+     *   ライトＯＦＦ
+     * */
+    public void light_OFF() {
+
+        pitch_zero = 0;
+        roll_plus = 0;
+        roll_minus = 0;
+
+        if(mCameraId == null){
+            return;
+        }
+        try {
+            mCameraManager.setTorchMode(mCameraId, false);
+        } catch (CameraAccessException e) {
+            //エラー処理
+            e.printStackTrace();
+        }
+    }
+
+
+    /* **************************************************
         サウンド再生
     ****************************************************/
 
@@ -665,9 +719,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     this.mainTimer3.cancel();
                     this.mainTimer3 = null;
                 }
-
                 //音量調整
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
+
+                //ライトON
+                if (db_light1 > 0){
+                    light_ON();
+                }
+
                 break;
 
             case 2: //異常音
@@ -690,6 +749,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 //音量調整
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+
+                //ライトON
+                if (db_light2 > 0){
+                    light_ON();
+                }
+
                 break;
 
             case 3: //緊急音
@@ -719,6 +784,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     /* 効果音ストップ */
     public void soundStop(int type){
         emergency_playing = false;
+
+        light_OFF();
 
         if (this.mainTimer1 != null) {
             this.mainTimer1.cancel();
