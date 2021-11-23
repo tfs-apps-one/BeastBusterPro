@@ -280,10 +280,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     ****************************************************/
     public void toggleSelect(){
         toggle_normal = (ToggleButton) findViewById(R.id.toggle_normal);
+        toggle_emergency = (ToggleButton) findViewById(R.id.toggle_emergency);
+        sw_shake = (Switch) findViewById(R.id.sw_shake);
+
         toggle_normal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    soundStop(1);
+                    toggle_emergency.setChecked(false);
                     soundStart(1);
                 } else {
                     soundStop(1);
@@ -291,11 +294,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        toggle_emergency = (ToggleButton) findViewById(R.id.toggle_emergency);
         toggle_emergency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    soundStop(2);
+                    toggle_normal.setChecked(false);
                     soundStart(2);
                 } else {
                     soundStop(2);
@@ -303,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        sw_shake = (Switch) findViewById(R.id.sw_shake);
         sw_shake.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -603,6 +604,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //ここに定周期で実行したい処理を記述します
             eHandler.post(new Runnable() {
                 public void run() {
+                    if (sw_shake == null) {
+                        return;
+                    }
+                    if (!sw_shake.isChecked()){
+                        return;
+                    }
+
                     sec_five += 1;
                     if (sec_five <= 3) {    // ３秒以内にイベントを捉えた場合に限り
                         if (roll_plus >= 4 && roll_minus >= 4) {
@@ -610,7 +618,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             roll_minus = 0;
                             roll_plus = 0;
                             /* 異常音を再生 */
-//                            emergency_Start();
+                            if (toggle_emergency != null){
+                                toggle_emergency.setChecked(true);
+                                emergency_playing = true;
+                            }
                         }
                     }
                     else
@@ -707,6 +718,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     /* 効果音ストップ */
     public void soundStop(int type){
+        emergency_playing = false;
+
         if (this.mainTimer1 != null) {
             this.mainTimer1.cancel();
             this.mainTimer1 = null;
