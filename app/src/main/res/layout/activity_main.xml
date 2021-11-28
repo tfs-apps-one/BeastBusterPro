@@ -50,9 +50,9 @@
             android:background="@drawable/tog_btn_bak"
             android:backgroundTint="@null"
             android:checked="false"
-            android:textOff="OFF"
-            android:textOn="O N"
-            android:textSize="30dp"
+            android:textOff="STOP"
+            android:textOn="PLAY"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -184,12 +184,12 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/tog_btn_bak"
+            android:background="@drawable/tog_btn_bak2"
             android:backgroundTint="@null"
             android:checked="false"
-            android:textOff="OFF"
-            android:textOn="O N"
-            android:textSize="30dp"
+            android:textOff="STOP"
+            android:textOn="PLAY"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -287,7 +287,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@null"
-        android:background="@drawable/btn_grad3"
+        android:background="@drawable/btn_round"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout23">
 
