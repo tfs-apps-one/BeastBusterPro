@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -74,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String _country;
 
     //  効果音
+    private AudioManager am;
     private MediaPlayer bgm;
     private MediaPlayer countText;			    //テキストビュー
+    private int bak_select;
     private int start_volume;
     private int set_interval;
     //  スレッド
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         _country = _local.getCountry();
 
         //  音量
-        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         start_volume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         //カメラ初期化
@@ -163,6 +166,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorManager == null) {
             sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         }
+        //音声初期化
+        if (am == null) {
+            am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        }
+
         //センサ監視起動
         this.emerTimer = new Timer();
         //タスククラスインスタンス生成
@@ -202,9 +210,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         /* 音量の戻しの処理 */
-        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, start_volume, 0);
-        am = null;
+        if (am != null) {
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, start_volume, 0);
+            am = null;
+        }
     }
 
     //  戻るボタン
@@ -214,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // 戻るボタンの処理
             // ダイアログ表示など特定の処理を行いたい場合はここに記述
             // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
-            if (this.mainTimer1 == null && this.mainTimer2 == null && this.mainTimer3 == null) {
+            if (soundIsPlaying() == false) {
                 /* そのまま終了へ */
             }
             else {
@@ -288,6 +297,45 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         TextView text_volume2 = (TextView)findViewById(R.id.text_volume2);
         text_volume2.setText(""+db_volume2);
+
+        /* レイアウトのアクティブ表示 */
+        LinearLayout lay_normal_11 = (LinearLayout)findViewById(R.id.linearLayout11);
+        LinearLayout lay_normal_13 = (LinearLayout)findViewById(R.id.linearLayout13);
+        if (soundIsPlayingEmergency()){
+            lay_normal_11.setBackgroundResource(R.drawable.btn_grad3);
+            lay_normal_13.setBackgroundResource(R.drawable.btn_grad3);
+        }
+        else{
+            lay_normal_11.setBackgroundResource(R.drawable.btn_grad1);
+            lay_normal_13.setBackgroundResource(R.drawable.btn_grad1);
+        }
+
+        LinearLayout lay_normal_12 = (LinearLayout)findViewById(R.id.linearLayout12);
+        if (soundIsPlaying()){
+            lay_normal_12.setBackgroundResource(R.drawable.btn_grad3);
+        }
+        else{
+            lay_normal_12.setBackgroundResource(R.drawable.btn_grad1);
+        }
+
+        LinearLayout lay_emergency_21 = (LinearLayout)findViewById(R.id.linearLayout21);
+        LinearLayout lay_emergency_23 = (LinearLayout)findViewById(R.id.linearLayout23);
+        if (soundIsPlayingNormal()){
+            lay_emergency_21.setBackgroundResource(R.drawable.btn_grad3);
+            lay_emergency_23.setBackgroundResource(R.drawable.btn_grad3);
+        }
+        else{
+            lay_emergency_21.setBackgroundResource(R.drawable.btn_grad2);
+            lay_emergency_23.setBackgroundResource(R.drawable.btn_grad2);
+        }
+        LinearLayout lay_emergency_22 = (LinearLayout)findViewById(R.id.linearLayout22);
+        if (soundIsPlaying()){
+            lay_emergency_22.setBackgroundResource(R.drawable.btn_grad3);
+        }
+        else{
+            lay_emergency_22.setBackgroundResource(R.drawable.btn_grad2);
+        }
+
     }
 
 
@@ -307,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 } else {
                     soundStop(1);
                 }
+                screen_display();
             }
         });
 
@@ -318,6 +367,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 } else {
                     soundStop(2);
                 }
+                screen_display();
             }
         });
 
@@ -329,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     db_shake = 0;
                     //  モーション停止
                 }
+                screen_display();
             }
         });
 
@@ -344,8 +395,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     //ツマミをドラッグした時
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                        db_volume1 = seekBar.getProgress();
-//                      am.setStreamVolume(AudioManager.STREAM_MUSIC, now_volume, 0);
+                        if (soundIsPlayingEmergency() == false) {
+                            db_volume1 = seekBar.getProgress();
+                            am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
+                        }
                         screen_display();
                     }
                     //ツマミに触れた時
@@ -366,8 +419,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     //ツマミをドラッグした時
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                        db_volume2 = seekBar.getProgress();
-//                      am.setStreamVolume(AudioManager.STREAM_MUSIC, now_volume, 0);
+                        if (soundIsPlayingNormal() == false) {
+                            db_volume2 = seekBar.getProgress();
+                            am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                        }
                         screen_display();
                     }
                     //ツマミに触れた時
@@ -393,7 +448,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                db_normal = position;
+                if (soundIsPlaying() == false){
+                    db_normal = position;
+                }
+                screen_display();
             }
         });
         //  スピナー（SOS音）
@@ -405,7 +463,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                db_emergency = position;
+                if (soundIsPlaying() == false) {
+                    db_emergency = position;
+                }
+                screen_display();
             }
         });
 
@@ -418,7 +479,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                db_light1 = position;
+                if (soundIsPlaying() == false) {
+                    db_light1 = position;
+                }
+                screen_display();
             }
         });
         //  スピナー（通常ライト）
@@ -430,7 +494,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                db_light2 = position;
+                if (soundIsPlaying() == false) {
+                    db_light2 = position;
+                }
+                screen_display();
             }
         });
 
@@ -443,10 +510,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
-                db_interval = position;
+                if (soundIsPlaying() == false) {
+                    db_interval = position;
+                }
+                screen_display();
             }
         });
-
         screen_display();
     }
 
@@ -693,11 +762,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     /* **************************************************
         サウンド再生
     ****************************************************/
+    public boolean soundIsPlaying(){
+
+        if (this.mainTimer1 != null){
+            return true;
+        }
+        if (this.mainTimer2 != null){
+            return true;
+        }
+        if (this.mainTimer3 != null){
+            return true;
+        }
+
+        return false;
+    }
+    public boolean soundIsPlayingNormal(){
+
+        if (this.mainTimer1 != null){
+            return true;
+        }
+        return false;
+    }
+    public boolean soundIsPlayingEmergency(){
+
+        if (this.mainTimer2 != null){
+            return true;
+        }
+        return false;
+    }
+
 
     /* 効果音スタート */
     public void soundStart(int type){
 
-        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         set_interval = soundInterval(db_interval);
 
         switch(type) {
