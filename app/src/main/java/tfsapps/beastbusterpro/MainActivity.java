@@ -41,6 +41,8 @@ import android.hardware.SensorManager;
 //国関連
 import java.util.Locale;
 
+import static java.lang.Thread.sleep;
+
 //public class MainActivity extends AppCompatActivity {
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int start_volume;
     private int set_interval;
     //  スレッド
+    private boolean blinking = false;
     private Timer mainTimer1;					//タイマー用
     private MainTimerTask mainTimerTask1;		//タイマタスククラス
     private Timer mainTimer2;					//タイマー用
@@ -92,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Timer emerTimer;					//タイマー用
     private EmerTimerTask emerTimerTask;		//タイマタスククラス
     private Handler eHandler = new Handler();   //UI Threadへのpost用ハンドラ
+    private Timer blinkTimer;					//タイマー用
+    private BlinkingTask blinkTimerTask;		//タイマタスククラス
+    private Handler bHandler = new Handler();   //UI Threadへのpost用ハンドラ
 
     //  ライト関連
     private CameraManager mCameraManager;
@@ -721,21 +727,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    /**
+     * タイマータスク派生クラス
+     * run()に定周期で処理したい内容を記述
+     *
+     */
+    public class BlinkingTask extends TimerTask {
+        @Override
+        public void run() {
+            //ここに定周期で実行したい処理を記述します
+            bHandler.post( new Runnable() {
+                public void run() {
+                    light_on_exec();
+                    if (blinking){
+                        blinking = false;
+                    }
+                    else{
+                        blinking = true;
+                    }
+                }
+            });
+        }
+    }
+
+
     /* **************************************************
         ライト処理
     ****************************************************/
     /*
      *   ライトＯＮ
      * */
-    public void light_ON() {
+    public void light_on_exec() {
         if(mCameraId == null){
             return;
         }
         try {
-            mCameraManager.setTorchMode(mCameraId, true);
+            mCameraManager.setTorchMode(mCameraId, blinking);
         } catch (CameraAccessException e) {
             //エラー処理
             e.printStackTrace();
+        }
+    }
+    public void light_ON(int type) {
+        if (type == 1){
+            blinking = true;
+            light_on_exec();
+        }
+        else if(type == 2){
+            this.blinkTimer = new Timer();
+            this.blinkTimerTask = new BlinkingTask();
+            this.blinkTimer.schedule(blinkTimerTask, 500, 500);
         }
     }
     /*
@@ -820,10 +861,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
 
                 //ライトON
-                if (db_light1 > 0){
-                    light_ON();
-                }
-
+                light_ON(db_light1);
                 break;
 
             case 2: //異常音
@@ -848,10 +886,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
 
                 //ライトON
-                if (db_light2 > 0){
-                    light_ON();
-                }
-
+                light_ON(db_light2);
                 break;
 
             case 3: //緊急音
@@ -896,6 +931,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             this.mainTimer3.cancel();
             this.mainTimer3 = null;
         }
+        if (this.blinkTimer != null) {
+            this.blinkTimer.cancel();
+            this.blinkTimer = null;
+        }
+
 //        this.light_OFF();
     }
 
