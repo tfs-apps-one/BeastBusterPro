@@ -3,19 +3,21 @@
     <!-- ボタンの形と色、OFFのときと下線の色を変える -->
     <item>
         <shape android:shape="rectangle">
+            <corners android:radius="4dp"/>
             <stroke
                 android:color="#ff666666"
-                android:width="7dp"
+                android:width="5dp"
                 />
         </shape>
     </item>
-    <item android:bottom="7dp">
+    <item android:bottom="5dp">
         <shape android:shape="rectangle">
+            <corners android:radius="4dp"/>
             <!--<corners android:radius="10dp"/>
             <solid android:color="#ffdddddd"/>-->
             <gradient
-                android:startColor="#ffeeeeee"
-                android:endColor="#ffdddddd"
+                android:startColor="#ffdedede"
+                android:endColor="#ffbbbbbb"
                 android:angle="90" />
         </shape>
     </item>

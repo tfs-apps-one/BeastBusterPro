@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ボタンの形と色 -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="4dp"/>
+            <!-- android:color="#ff2ca9e1"-->
+            <stroke
+                android:color="#ffee9544"
+                android:width="5dp"
+                />
+        </shape>
+    </item>
+    <item android:bottom="5dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="4dp"/>
+            <!--<solid android:color="#ffdddddd"/>-->
+            <!--
+android:startColor="#ff88ddcc"
+android:endColor="#ffdeffff"
+-->
+            <gradient
+                android:startColor="#ffffdd99"
+                android:endColor="#ffffeeaa"
+            android:angle="270" />
+        </shape>
+    </item>
+</layer-list>
