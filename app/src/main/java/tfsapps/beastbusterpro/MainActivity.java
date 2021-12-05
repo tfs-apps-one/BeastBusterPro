@@ -568,11 +568,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             /* 新規レコード追加 */
             ContentValues insertValues = new ContentValues();
             insertValues.put("isopen", 1);
-            insertValues.put("normal", 0);
-            insertValues.put("emergency", 0);
-            insertValues.put("interval", 0);
-            insertValues.put("volume1", 0);
-            insertValues.put("volume2", 0);
+            insertValues.put("normal", 1);
+            insertValues.put("emergency", 4);
+            insertValues.put("interval", 1);
+            insertValues.put("volume1", 1);
+            insertValues.put("volume2", 1);
             insertValues.put("light1", 0);
             insertValues.put("light2", 0);
             insertValues.put("shake", 0);
@@ -591,13 +591,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } finally {
                 db.close();
             }
+            /*
             if (ret == -1) {
                 Toast.makeText(this, "DataBase Create.... ERROR", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "DataBase Create.... OK", Toast.LENGTH_SHORT).show();
             }
+
+             */
         } else {
+            /*
             Toast.makeText(this, "Data Loading...  normal:" + db_normal, Toast.LENGTH_SHORT).show();
+             */
         }
     }
 
@@ -622,11 +627,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } finally {
             db.close();
         }
+        /*
         if (ret == -1) {
             Toast.makeText(this, "Saving.... ERROR ", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Saving.... OK "+ "op=0:"+db_isopen+" nm=1:"+db_normal+" em=2:"+db_emergency+" it=3:"+db_interval+" v1=4:"+db_volume1+" v2=5:"+db_volume2+" l1=6:"+db_light1+" l2=7:"+db_light2+" sk=8:"+db_shake, Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     @Override
@@ -839,6 +846,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void soundStart(int type){
 
         set_interval = soundInterval(db_interval);
+        if (set_interval < INTERVAL_1){
+            set_interval = 100;
+        }
 
         switch(type) {
             case 1: //通常音
