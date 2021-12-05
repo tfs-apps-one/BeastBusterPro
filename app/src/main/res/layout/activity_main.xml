@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         android:backgroundTint="@null"
         android:background="@drawable/btn_grad1"
         android:layout_alignParentStart="true"
@@ -111,7 +111,7 @@
         android:layout_marginTop="0dp"
         android:layout_weight="1"
         android:background="@null"
-        android:src="@drawable/volume" />
+        android:src="@drawable/volume1" />
 
     <TextView
         android:id="@+id/text_volume1"
@@ -230,7 +230,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         android:backgroundTint="@null"
         android:background="@drawable/btn_grad2"
         android:layout_alignParentStart="true"
@@ -247,7 +247,7 @@
         android:layout_marginTop="0dp"
         android:layout_weight="1"
         android:background="@null"
-        android:src="@drawable/volume" />
+        android:src="@drawable/volume2" />
 
     <TextView
         android:id="@+id/text_volume2"

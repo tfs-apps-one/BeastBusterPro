@@ -677,8 +677,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //ここに定周期で実行したい処理を記述します
             mHandler.post( new Runnable() {
                 public void run() {
-                    //BGMタイマー起動
-                    countText.start();
+                    if (countText != null) {
+                        //BGMタイマー起動
+                        countText.start();
+                    }
                 }
             });
         }
@@ -935,14 +937,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             this.blinkTimer.cancel();
             this.blinkTimer = null;
         }
-
-//        this.light_OFF();
     }
 
     public void soundSelect(int type){
 
         switch (type){
+            default:
+                this.countText = null;
             case 0:
+                this.countText = null;
                 break;
             case 1:
                 this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.bell_1);
@@ -961,6 +964,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 break;
             case 6:
                 this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.thunder_3);
+                break;
+            case 7:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.firecracker);
+                break;
+            case 8:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.firework);
+                break;
+            case 9:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.radio_1);
+                break;
+            case 10:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.whistle);
                 break;
         }
     }

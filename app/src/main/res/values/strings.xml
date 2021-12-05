@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeastBusterPro</string>
+    <string name="app_name">熊鈴Pro</string>
 
     <string-array name="list_sound1">
     <item>通常音:---</item>
@@ -9,6 +9,10 @@
     <item>通常音:雷鳴1</item>
     <item>通常音:雷鳴2</item>
     <item>通常音:雷鳴3</item>
+    <item>通常音:爆竹</item>
+    <item>通常音:花火</item>
+    <item>通常音:ラジオ</item>
+    <item>通常音:ﾎｲｯｽﾙ</item>
     </string-array>
 
     <string-array name="list_sound2">
@@ -19,12 +23,16 @@
     <item>SOS音:雷鳴1</item>
     <item>SOS音:雷鳴2</item>
     <item>SOS音:雷鳴3</item>
+    <item>SOS音:爆竹</item>
+    <item>SOS音:花火</item>
+    <item>SOS音:ラジオ</item>
+    <item>SOS音:ﾎｲｯｽﾙ</item>
     </string-array>
 
     <string-array name="list_light">
     <item>ライト:OFF</item>
     <item>ライト:ON</item>
-    <item>ライト:ON(点滅)</item>
+    <item>ライト:点滅</item>
     </string-array>
 
     <string-array name="list_interval">
