@@ -30,13 +30,14 @@
             android:id="@+id/btn_img_normal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:background="@null"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:src="@drawable/bell1" />
+            android:background="@null"
+            android:src="@drawable/bell1"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ToggleButton
             android:id="@+id/toggle_normal"
@@ -101,17 +102,18 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
         android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/btn_img_volume1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_weight="1"
-        android:background="@null"
-        android:src="@drawable/volume1" />
+        <ImageButton
+            android:id="@+id/btn_img_volume1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/volume1"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/text_volume1"
@@ -167,13 +169,14 @@
             android:id="@+id/btn_img_emergency"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/sos1" />
+            android:src="@drawable/sos1"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ToggleButton
             android:id="@+id/toggle_emergency"
@@ -237,17 +240,18 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout22"
         android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/btn_img_volume2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_weight="1"
-        android:background="@null"
-        android:src="@drawable/volume2" />
+        <ImageButton
+            android:id="@+id/btn_img_volume2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/volume2"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_volume2"
