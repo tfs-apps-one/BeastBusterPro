@@ -1,52 +1,52 @@
 <resources>
-    <string name="app_name">熊鈴Pro</string>
+    <string name="app_name">BearBell Pro</string>
 
     <string-array name="list_sound1">
-    <item>通常音:---</item>
-    <item>通常音:鈴音1</item>
-    <item>通常音:鈴音2</item>
-    <item>通常音:鈴音3</item>
-    <item>通常音:雷鳴1</item>
-    <item>通常音:雷鳴2</item>
-    <item>通常音:雷鳴3</item>
-    <item>通常音:爆竹</item>
-    <item>通常音:花火</item>
-    <item>通常音:ラジオ</item>
-    <item>通常音:ﾎｲｯｽﾙ</item>
+        <item>Normal Sound</item>
+        <item>BELL 1</item>
+        <item>BELL 2</item>
+        <item>BELL 3</item>
+        <item>THUNDER 1</item>
+        <item>THUNDER 2</item>
+        <item>THUNDER 3</item>
+        <item>FIRECRACKER</item>
+        <item>FIREWORK</item>
+        <item>RADIO</item>
+        <item>WHISTLE</item>
     </string-array>
 
     <string-array name="list_sound2">
-    <item>SOS音:---</item>
-    <item>SOS音:鈴音1</item>
-    <item>SOS音:鈴音2</item>
-    <item>SOS音:鈴音3</item>
-    <item>SOS音:雷鳴1</item>
-    <item>SOS音:雷鳴2</item>
-    <item>SOS音:雷鳴3</item>
-    <item>SOS音:爆竹</item>
-    <item>SOS音:花火</item>
-    <item>SOS音:ラジオ</item>
-    <item>SOS音:ﾎｲｯｽﾙ</item>
+        <item>Emergency Sound</item>
+        <item>BELL 1</item>
+        <item>BELL 2</item>
+        <item>BELL 3</item>
+        <item>THUNDER 1</item>
+        <item>THUNDER 2</item>
+        <item>THUNDER 3</item>
+        <item>FIRECRACKER</item>
+        <item>FIREWORK</item>
+        <item>RADIO</item>
+        <item>WHISTLE</item>
     </string-array>
 
     <string-array name="list_light">
-    <item>ライト:OFF</item>
-    <item>ライト:ON</item>
-    <item>ライト:点滅</item>
+        <item>Light:OFF</item>
+        <item>Light:ON</item>
+        <item>Light:FLASH</item>
     </string-array>
 
     <string-array name="list_interval">
-    <item>再生間隔:0秒</item>
-    <item>再生間隔:1秒</item>
-    <item>再生間隔:3秒</item>
-    <item>再生間隔:5秒</item>
-    <item>再生間隔:7秒</item>
-    <item>再生間隔:10秒</item>
-    <item>再生間隔:15秒</item>
-    <item>再生間隔:20秒</item>
-    <item>再生間隔:30秒</item>
+        <item>Interval:  0 SEC</item>
+        <item>Interval:  1 SEC</item>
+        <item>Interval:  3 SEC</item>
+        <item>Interval:  5 SEC</item>
+        <item>Interval:  7 SEC</item>
+        <item>Interval: 10 SEC</item>
+        <item>Interval: 15 SEC</item>
+        <item>Interval: 20 SEC</item>
+        <item>Interval: 30 SEC</item>
     </string-array>
 
-    <string name="sw_shake">スマホを左右に振ってSOS音を再生する</string>
+    <string name="sw_shake">Shake to play emergency sound</string>
 
 </resources>
