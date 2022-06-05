@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int db_light1 = 0;      //DBライト（通常音）
     private int db_light2 = 0;      //DBライト（緊急音）
     private int db_shake = 0;       //DB振る
+    private int db_data1 = 0;       //DB画面タイプ
 
     private Spinner sp_sound1;      //通常音選択
     private Spinner sp_sound2;      //SOS音選択
@@ -70,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ToggleButton toggle_normal;      //通常音状態（ON/OFF）
     private ToggleButton toggle_emergency;   //異常音状態（ON/OFF）
     private Switch sw_shake;                 //振る振る
+
+    private ImageButton img_bell;
+    private ImageButton img_sos;
+    private ImageButton img_volume_bell;
+    private ImageButton img_volume_sos;
 
     //  国設定
     private Locale _local;
@@ -312,8 +319,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             lay_normal_13.setBackgroundResource(R.drawable.btn_grad3);
         }
         else{
-            lay_normal_11.setBackgroundResource(R.drawable.btn_grad1);
-            lay_normal_13.setBackgroundResource(R.drawable.btn_grad1);
+            if (db_data1 == 1) {
+                lay_normal_11.setBackgroundResource(R.drawable.btn_grad1);
+                lay_normal_13.setBackgroundResource(R.drawable.btn_grad1);
+            }
+            else {
+                lay_normal_11.setBackgroundResource(R.drawable.btn_grad4);
+                lay_normal_13.setBackgroundResource(R.drawable.btn_grad4);
+            }
         }
 
         LinearLayout lay_normal_12 = (LinearLayout)findViewById(R.id.linearLayout12);
@@ -321,9 +334,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             lay_normal_12.setBackgroundResource(R.drawable.btn_grad3);
         }
         else{
-            lay_normal_12.setBackgroundResource(R.drawable.btn_grad1);
-        }
+            if (db_data1 == 1) {
+                lay_normal_12.setBackgroundResource(R.drawable.btn_grad1);
+            }
+            else {
+                lay_normal_12.setBackgroundResource(R.drawable.btn_grad4);
+            }
 
+        }
         LinearLayout lay_emergency_21 = (LinearLayout)findViewById(R.id.linearLayout21);
         LinearLayout lay_emergency_23 = (LinearLayout)findViewById(R.id.linearLayout23);
         if (soundIsPlayingNormal()){
@@ -331,16 +349,46 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             lay_emergency_23.setBackgroundResource(R.drawable.btn_grad3);
         }
         else{
-            lay_emergency_21.setBackgroundResource(R.drawable.btn_grad2);
-            lay_emergency_23.setBackgroundResource(R.drawable.btn_grad2);
+            if (db_data1 == 1) {
+                lay_emergency_21.setBackgroundResource(R.drawable.btn_grad2);
+                lay_emergency_23.setBackgroundResource(R.drawable.btn_grad2);
+            }
+            else{
+                lay_emergency_21.setBackgroundResource(R.drawable.btn_grad4);
+                lay_emergency_23.setBackgroundResource(R.drawable.btn_grad4);
+            }
         }
         LinearLayout lay_emergency_22 = (LinearLayout)findViewById(R.id.linearLayout22);
         if (soundIsPlaying()){
             lay_emergency_22.setBackgroundResource(R.drawable.btn_grad3);
         }
         else{
-            lay_emergency_22.setBackgroundResource(R.drawable.btn_grad2);
+            if (db_data1 == 1) {
+                lay_emergency_22.setBackgroundResource(R.drawable.btn_grad2);
+            }
+            else{
+                lay_emergency_22.setBackgroundResource(R.drawable.btn_grad4);
+            }
         }
+
+        //ImageButton
+        if (img_bell == null) {
+            img_bell = (ImageButton) findViewById(R.id.btn_img_normal);
+        }
+        if (db_data1 == 1)     img_bell.setImageResource(R.drawable.bell1);
+        else                   img_bell.setImageResource(R.drawable.bell2);
+
+        if (img_volume_bell == null) {
+            img_volume_bell = (ImageButton) findViewById(R.id.btn_img_volume1);
+        }
+        if (db_data1 == 1)     img_volume_bell.setImageResource(R.drawable.volume1);
+        else                   img_volume_bell.setImageResource(R.drawable.volume3);
+
+        if (img_volume_sos == null) {
+            img_volume_sos = (ImageButton) findViewById(R.id.btn_img_volume2);
+        }
+        if (db_data1 == 1)     img_volume_sos.setImageResource(R.drawable.volume2);
+        else                   img_volume_sos.setImageResource(R.drawable.volume3);
 
     }
 
