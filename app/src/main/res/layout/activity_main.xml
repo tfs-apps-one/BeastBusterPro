@@ -12,19 +12,60 @@
     ******************************************************************
 -->
     <LinearLayout
-        android:id="@+id/linearLayout11"
+        android:id="@+id/linearLayout00"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="30dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal"
         android:backgroundTint="@null"
-        android:background="@drawable/btn_grad1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <RadioGroup
+            android:id="@+id/RadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbtn_screen_1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="onRbtn_Screen_1"
+                android:text="@string/screen_1"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/rbtn_screen_2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="onRbtn_Screen_2"
+                android:text="@string/screen_2"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout00"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/btn_grad1"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout00">
 
         <ImageButton
             android:id="@+id/btn_img_normal"

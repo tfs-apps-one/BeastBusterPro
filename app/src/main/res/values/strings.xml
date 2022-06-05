@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BearBell Pro</string>
+    <string name="screen_1">Screen A</string>
+    <string name="screen_2">Screen B</string>
 
     <string-array name="list_sound1">
         <item>Normal Sound</item>
