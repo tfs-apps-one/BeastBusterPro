@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">熊鈴Pro</string>
+    <string name="screen_1">画面タイプA</string>
+    <string name="screen_2">画面タイプB</string>
 
     <string-array name="list_sound1">
         <item>通常音:---</item>
