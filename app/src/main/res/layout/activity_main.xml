@@ -12,9 +12,17 @@
     ******************************************************************
 -->
     <LinearLayout
+        android:id="@+id/linearLayout_100"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+    <LinearLayout
         android:id="@+id/linearLayout00"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
@@ -57,7 +65,8 @@
     <LinearLayout
         android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout00"
         android:layout_marginStart="5dp"
@@ -102,7 +111,8 @@
     <LinearLayout
         android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout11"
         android:layout_marginStart="5dp"
@@ -117,6 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:theme="@style/SpinnerTheme"
             android:backgroundTint="@null"
             android:entries="@array/list_sound1"
             android:spinnerMode="dialog"/>
@@ -126,6 +137,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:theme="@style/SpinnerTheme"
             android:entries="@array/list_light"
             android:spinnerMode="dialog"/>
 
@@ -134,9 +146,10 @@
     <LinearLayout
         android:id="@+id/linearLayout13"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_height="56dp"
         android:backgroundTint="@null"
         android:background="@drawable/btn_grad1"
         android:layout_alignParentStart="true"
@@ -156,33 +169,33 @@
             android:src="@drawable/volume1"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/text_volume1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center|right"
-        android:textColor="@color/teal_700"
-        android:text="1"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/text_volume1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center|right"
+            android:textColor="@color/teal_700"
+            android:text="1"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
 
-    <SeekBar
-        android:id="@+id/seek_volume1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="20dp"
-        android:progress="5"
-        android:max="15"
-        android:progressBackgroundTint="@color/design_default_color_primary_variant"/>
+        <SeekBar
+            android:id="@+id/seek_volume1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:progress="5"
+            android:max="15"
+            android:progressBackgroundTint="@color/design_default_color_primary_variant"/>
 
     </LinearLayout>
 
@@ -195,7 +208,8 @@
     <LinearLayout
         android:id="@+id/linearLayout21"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
@@ -241,7 +255,8 @@
     <LinearLayout
         android:id="@+id/linearLayout22"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout21"
         android:layout_marginStart="5dp"
@@ -256,6 +271,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:theme="@style/SpinnerTheme"
             android:entries="@array/list_sound2"
             android:spinnerMode="dialog"/>
 
@@ -264,6 +280,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:theme="@style/SpinnerTheme"
             android:entries="@array/list_light"
             android:spinnerMode="dialog"/>
 
@@ -272,9 +289,10 @@
     <LinearLayout
         android:id="@+id/linearLayout23"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_height="56dp"
         android:backgroundTint="@null"
         android:background="@drawable/btn_grad2"
         android:layout_alignParentStart="true"
@@ -294,43 +312,45 @@
             android:src="@drawable/volume2"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/text_volume2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center|right"
-        android:textColor="@color/design_default_color_secondary_variant"
-        android:text="1"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/text_volume2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center|right"
+            android:textColor="@color/design_default_color_secondary_variant"
+            android:text="1"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
 
-    <SeekBar
-        android:id="@+id/seek_volume2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="20dp"
-        android:progress="5"
-        android:max="15"
-        android:progressBackgroundTint="@color/design_default_color_primary_variant"/>
-    </LinearLayout>
+        <SeekBar
+            android:id="@+id/seek_volume2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:progress="5"
+            android:max="15"
+            android:progressBackgroundTint="@color/design_default_color_primary_variant"/>
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout31"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@null"
         android:background="@drawable/btn_round"
         android:orientation="horizontal"
@@ -341,6 +361,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
+            android:theme="@style/SpinnerTheme"
             android:entries="@array/list_interval"
             android:spinnerMode="dialog"/>
 
@@ -352,6 +373,8 @@
             android:textColor="@color/design_default_color_error"
             android:textStyle="bold"
             android:text="@string/sw_shake" />
+
+    </LinearLayout>
 
     </LinearLayout>
 
