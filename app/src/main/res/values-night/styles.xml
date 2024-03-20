@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- res/values/styles.xml -->
+    <style name="SpinnerTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/black</item> <!-- スピナーのテキスト色 -->
+    </style>
+    
+</resources>

@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -470,7 +471,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         if (soundIsPlayingEmergency() == false) {
                             db_volume1 = seekBar.getProgress();
-                            am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
+                            int tmp_volume = db_volume1;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                                tmp_volume = tmp_volume * 2;  //30段階になったため
+                            }
+                            am.setStreamVolume(AudioManager.STREAM_MUSIC, tmp_volume, 0);
+//                          am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
                         }
                         screen_display();
                     }
@@ -494,7 +500,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         if (soundIsPlayingNormal() == false) {
                             db_volume2 = seekBar.getProgress();
-                            am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                            int tmp_volume = db_volume2;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                                tmp_volume = tmp_volume * 2;  //30段階になったため
+                            }
+                            am.setStreamVolume(AudioManager.STREAM_MUSIC, tmp_volume, 0);
+//                          am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
                         }
                         screen_display();
                     }
@@ -914,6 +925,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     /* 効果音スタート */
     public void soundStart(int type){
+        int tmp_volume = 1;
 
         set_interval = soundInterval(db_interval);
         if (set_interval < INTERVAL_1){
@@ -940,7 +952,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     this.mainTimer3 = null;
                 }
                 //音量調整
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume1, 0);
+                tmp_volume = db_volume1;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    tmp_volume = tmp_volume * 2;  //30段階になったため
+                }
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, tmp_volume, 0);
 
                 //ライトON
                 light_ON(db_light1);
@@ -965,7 +981,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     this.mainTimer3 = null;
                 }
                 //音量調整
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                tmp_volume = db_volume2;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    tmp_volume = tmp_volume * 2;  //30段階になったため
+                }
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, tmp_volume, 0);
 
                 //ライトON
                 light_ON(db_light2);
@@ -990,7 +1010,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     this.mainTimer2 = null;
                 }
                 //音量調整
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, db_volume2, 0);
+                tmp_volume = db_volume2;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    tmp_volume = tmp_volume * 2;  //30段階になったため
+                }
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, tmp_volume, 0);
                 break;
         }
     }
