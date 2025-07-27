@@ -15,6 +15,7 @@
         <item>FIREWORK</item>
         <item>RADIO</item>
         <item>WHISTLE</item>
+        <item>100hz</item>
     </string-array>
 
     <string-array name="list_sound2">
@@ -28,7 +29,7 @@
         <item>FIRECRACKER</item>
         <item>FIREWORK</item>
         <item>RADIO</item>
-        <item>WHISTLE</item>
+        <item>100hz</item>
     </string-array>
 
     <string-array name="list_light">

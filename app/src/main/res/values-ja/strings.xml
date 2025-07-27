@@ -15,6 +15,7 @@
         <item>通常音:花火</item>
         <item>通常音:ラジオ</item>
         <item>通常音:ﾎｲｯｽﾙ</item>
+        <item>通常音:100hz</item>
     </string-array>
 
     <string-array name="list_sound2">
@@ -29,6 +30,7 @@
         <item>SOS音:花火</item>
         <item>SOS音:ラジオ</item>
         <item>SOS音:ﾎｲｯｽﾙ</item>
+        <item>SOS音:100hz</item>
     </string-array>
 
     <string-array name="list_light">

@@ -1081,6 +1081,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             case 10:
                 this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.whistle);
                 break;
+            case 11:
+                this.countText = (MediaPlayer) MediaPlayer.create(this, R.raw.s100hz);
+                break;
+
         }
     }
 
