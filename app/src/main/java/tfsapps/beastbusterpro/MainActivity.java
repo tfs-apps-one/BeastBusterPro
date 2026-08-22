@@ -311,18 +311,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         else                sw_shake.setChecked(false);
 
         /* TEXT */
+        int textColor = (db_data1 == 0) ? android.graphics.Color.WHITE : android.graphics.Color.parseColor("#333333");
+
         TextView text_volume1 = (TextView)findViewById(R.id.text_volume1);
         text_volume1.setText(""+db_volume1);
+        text_volume1.setTextColor(textColor);
 
         TextView text_volume2 = (TextView)findViewById(R.id.text_volume2);
         text_volume2.setText(""+db_volume2);
+        text_volume2.setTextColor(textColor);
+
+        if (toggle_normal != null) toggle_normal.setTextColor(textColor);
+        if (toggle_emergency != null) toggle_emergency.setTextColor(textColor);
+
+        int bg_active_normal = (db_data1 == 0) ? R.drawable.btn_grad_active_normal : R.drawable.btn_grad_active_normal_light;
+        int bg_active_emergency = (db_data1 == 0) ? R.drawable.btn_grad_active_emergency : R.drawable.btn_grad_active_emergency_light;
+        int bg_disabled = (db_data1 == 0) ? R.drawable.btn_grad3 : R.drawable.btn_grad3_light;
 
         /* レイアウトのアクティブ表示 */
         LinearLayout lay_normal_11 = (LinearLayout)findViewById(R.id.linearLayout11);
         LinearLayout lay_normal_13 = (LinearLayout)findViewById(R.id.linearLayout13);
-        if (soundIsPlayingEmergency()){
-            lay_normal_11.setBackgroundResource(R.drawable.btn_grad3);
-            lay_normal_13.setBackgroundResource(R.drawable.btn_grad3);
+        if (soundIsPlayingNormal()){
+            lay_normal_11.setBackgroundResource(bg_active_normal);
+            lay_normal_13.setBackgroundResource(bg_active_normal);
+        }
+        else if (soundIsPlayingEmergency()){
+            lay_normal_11.setBackgroundResource(bg_disabled);
+            lay_normal_13.setBackgroundResource(bg_disabled);
         }
         else{
             if (db_data1 == 0) {
@@ -337,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         LinearLayout lay_normal_12 = (LinearLayout)findViewById(R.id.linearLayout12);
         if (soundIsPlaying()){
-            lay_normal_12.setBackgroundResource(R.drawable.btn_grad3);
+            lay_normal_12.setBackgroundResource(bg_disabled);
         }
         else{
             if (db_data1 == 0) {
@@ -346,13 +361,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             else {
                 lay_normal_12.setBackgroundResource(R.drawable.btn_grad4);
             }
-
         }
+
         LinearLayout lay_emergency_21 = (LinearLayout)findViewById(R.id.linearLayout21);
         LinearLayout lay_emergency_23 = (LinearLayout)findViewById(R.id.linearLayout23);
-        if (soundIsPlayingNormal()){
-            lay_emergency_21.setBackgroundResource(R.drawable.btn_grad3);
-            lay_emergency_23.setBackgroundResource(R.drawable.btn_grad3);
+        if (soundIsPlayingEmergency()){
+            lay_emergency_21.setBackgroundResource(bg_active_emergency);
+            lay_emergency_23.setBackgroundResource(bg_active_emergency);
+        }
+        else if (soundIsPlayingNormal()){
+            lay_emergency_21.setBackgroundResource(bg_disabled);
+            lay_emergency_23.setBackgroundResource(bg_disabled);
         }
         else{
             if (db_data1 == 0) {
@@ -366,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         LinearLayout lay_emergency_22 = (LinearLayout)findViewById(R.id.linearLayout22);
         if (soundIsPlaying()){
-            lay_emergency_22.setBackgroundResource(R.drawable.btn_grad3);
+            lay_emergency_22.setBackgroundResource(bg_disabled);
         }
         else{
             if (db_data1 == 0) {
@@ -381,21 +400,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (img_bell == null) {
             img_bell = (ImageButton) findViewById(R.id.btn_img_normal);
         }
-        if (db_data1 == 0)     img_bell.setImageResource(R.drawable.bell1);
-        else                   img_bell.setImageResource(R.drawable.bell2);
+        img_bell.setImageResource(R.drawable.ic_bell);
 
         if (img_volume_bell == null) {
             img_volume_bell = (ImageButton) findViewById(R.id.btn_img_volume1);
         }
-        if (db_data1 == 0)     img_volume_bell.setImageResource(R.drawable.volume1);
-        else                   img_volume_bell.setImageResource(R.drawable.volume3);
+        img_volume_bell.setImageResource(R.drawable.ic_volume);
 
         if (img_volume_sos == null) {
             img_volume_sos = (ImageButton) findViewById(R.id.btn_img_volume2);
         }
-        if (db_data1 == 0)     img_volume_sos.setImageResource(R.drawable.volume2);
-        else                   img_volume_sos.setImageResource(R.drawable.volume3);
-
+        img_volume_sos.setImageResource(R.drawable.ic_volume_alert);
 
         if (rbtn_screen_A == null){
             rbtn_screen_A = (RadioButton) findViewById(R.id.rbtn_screen_1);
@@ -411,6 +426,41 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         else{
             rbtn_screen_A.setChecked(false);
             rbtn_screen_B.setChecked(true);
+        }
+
+        // Apply background and spinner texts dynamically
+        androidx.constraintlayout.widget.ConstraintLayout root_layout = findViewById(R.id.root_layout);
+        if (root_layout != null) {
+            if (db_data1 == 0) {
+                root_layout.setBackgroundResource(R.color.dark_bg);
+            } else {
+                root_layout.setBackgroundColor(android.graphics.Color.parseColor("#FAFAFA"));
+            }
+        }
+        
+        if (toggle_normal != null) toggle_normal.setBackgroundResource(db_data1 == 0 ? R.drawable.tog_btn_bak : R.drawable.tog_btn_bak_light);
+        if (toggle_emergency != null) toggle_emergency.setBackgroundResource(db_data1 == 0 ? R.drawable.tog_btn_bak2 : R.drawable.tog_btn_bak2_light);
+
+        LinearLayout lay_31 = (LinearLayout)findViewById(R.id.linearLayout31);
+        if (lay_31 != null) {
+            lay_31.setBackgroundResource(db_data1 == 0 ? R.drawable.btn_round : R.drawable.btn_round_light);
+        }
+
+        rbtn_screen_A.setTextColor(textColor);
+        rbtn_screen_B.setTextColor(textColor);
+
+        Spinner[] spinners = {sp_sound1, sp_sound2, sp_light1, sp_light2, sp_interval};
+        for (final Spinner sp : spinners) {
+            if (sp != null) {
+                sp.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (sp.getSelectedView() instanceof TextView) {
+                            ((TextView)sp.getSelectedView()).setTextColor(textColor);
+                        }
+                    }
+                });
+            }
         }
     }
 

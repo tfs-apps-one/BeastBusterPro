@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_bg"
     tools:context=".MainActivity">
 
 <!--
@@ -47,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRbtn_Screen_1"
                 android:text="@string/screen_1"
+                android:textColor="@color/text_primary"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
@@ -56,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRbtn_Screen_2"
                 android:text="@string/screen_2"
+                android:textColor="@color/text_primary"
                 tools:ignore="TouchTargetSizeCheck" />
         </RadioGroup>
 
@@ -81,12 +85,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:padding="15dp"
             android:background="@null"
-            android:src="@drawable/bell1"
+            android:src="@drawable/ic_bell"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ToggleButton
@@ -104,6 +110,7 @@
             android:textOff="STOP"
             android:textOn="PLAY"
             android:textSize="25dp"
+            android:textColor="@color/text_primary"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -166,7 +173,7 @@
             android:layout_marginBottom="0dp"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/volume1"
+            android:src="@drawable/ic_volume"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <TextView
@@ -179,7 +186,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="5dp"
             android:gravity="center|right"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/cyan_accent"
             android:text="1"
             android:textStyle="bold"
             android:textSize="20dp"/>
@@ -225,12 +232,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:padding="15dp"
             android:background="@null"
-            android:src="@drawable/sos1"
+            android:src="@drawable/ic_sos"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ToggleButton
@@ -248,6 +257,7 @@
             android:textOff="STOP"
             android:textOn="PLAY"
             android:textSize="25dp"
+            android:textColor="@color/text_primary"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -309,7 +319,7 @@
             android:layout_marginBottom="0dp"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/volume2"
+            android:src="@drawable/ic_volume_alert"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
@@ -322,7 +332,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="5dp"
             android:gravity="center|right"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="@color/orange_accent"
             android:text="1"
             android:textStyle="bold"
             android:textSize="20dp"/>
@@ -370,7 +380,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:textColor="@color/design_default_color_error"
+            android:textColor="@color/neon_red"
             android:textStyle="bold"
             android:text="@string/sw_shake" />
 

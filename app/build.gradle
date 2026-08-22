@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'tfsapps.beastbusterpro'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "tfsapps.beastbusterpro"
         minSdk 26
-        targetSdk 35
-        versionCode 10
-        versionName "2.3"
+        targetSdk 36
+        versionCode 11
+        versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
